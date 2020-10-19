@@ -15,12 +15,12 @@ state_space_size = env.observation_space.n
 q_table = np.zeros((state_space_size, action_space_size))
 #print(q_table)
 
-# instaniate global variables
+# instaniate hyper-parameters
 num_episodes = 10000
-steps_per_episodes = 1000
+steps_per_episodes = 100
 learning_rate = 0.1
 discount_rate = 0.99
-exploration_rate = .1
+exploration_rate = 1
 max_exploration_rate = 1
 min_exploration_rate = 0.01
 exploration_decay_rate = 0.001
