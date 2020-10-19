@@ -12,12 +12,12 @@ observation = env.reset()
 # setup the q-table
 action_space_size = env.action_space.n
 state_space_size = env.observation_space.n
-q_table = np.zeros((action_space_size, state_space_size))
+q_table = np.zeros((state_space_size, action_space_size))
 #print(q_table)
 
 # instaniate global variables
 num_episodes = 10000
-steps_per_episodes = 100
+steps_per_episodes = 1000
 learning_rate = 0.1
 discount_rate = 0.99
 exploration_rate = 1
@@ -43,12 +43,14 @@ for episode in range(num_episodes):
         else:
             action = env.action_space.sample()
         
-        new_state, reward, done, info = env.step(action)
-        print(q_table[state, :])
-        print(q_table.shape)
+        next_state, reward, done, info = env.step(action)
+        #print(next_state)
+        #print(q_table.shape)
+
         # update q-table
-        q_table[state, action] = q_table[state, action] * (1 - learning_rate) + learning_rate * (reward + discount_rate * np.max(q_table[new_state, :]))
-        state = new_state
+        q_table[state, action] = q_table[state, action] * (1 - learning_rate) + learning_rate * (reward + discount_rate * np.max(q_table[next_state, :]))
+
+        state = next_state
         rewards_current_episode += reward
         
         if done == True:
